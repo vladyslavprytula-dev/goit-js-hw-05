@@ -25,17 +25,21 @@ class Car {
     this.speed = 0;
   }
   accelerate(value) {
-    if (value <= this.maxSpeed) {
-      this.speed = this.speed + value;
+    if (this.isOn) {
+      if (value + this.speed <= this.maxSpeed) {
+        this.speed = this.speed + value;
+      }
     }
   }
   decelerate(value) {
-    if (value > 0) {
+    if (value - this.speed > 0) {
       this.speed = this.speed - value;
     }
   }
   drive(hours) {
-    this.distance = this.distance + hours * this.speed;
+    if (this.isOn) {
+      this.distance = this.distance + hours * this.speed;
+    }
   }
 }
 
@@ -57,3 +61,7 @@ Car.getSpecs(mustang);
 console.log(mustang.price); // 2000
 mustang.price = 4000;
 console.log(mustang.price); // 4000
+
+mustang.accelerate(50);
+mustang.drive(2);
+Car.getSpecs(mustang);
